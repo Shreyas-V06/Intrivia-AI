@@ -1,4 +1,4 @@
-from schemas.interview_qa import *
+from schemas.QAmodel import *
 from initializers.initialize_llm import initialize_llm
 from initializers.initialize_db import initialize_db
 from prompts.youtube import get_yt_prompt
@@ -23,8 +23,4 @@ def transcribe_yt_to_str(url:str)->str:
         result+=snippet.text
     return result
 
-def push_interview_details(details):
-    db=initialize_db()
-    collection=db.Intrivia
-    interview_id=collection.interviews.insert_one(details).inserted_id
-    return interview_id
+
