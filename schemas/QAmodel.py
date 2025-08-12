@@ -1,5 +1,5 @@
 from pydantic import Field,BaseModel
-from typing import List
+from typing import List,Optional,Dict
 
 class QAItem(BaseModel):
     question:str = Field(..., description="""This field will contain a question extracted from the Youtube transcript.
@@ -29,3 +29,18 @@ class YouTubeQARequest(BaseModel):
     description: str
     creator: str
     tags: List[str]
+
+class CustomQARequest(BaseModel):
+    prompt:str
+    title: str
+    description: str
+    creator: str
+    tags: List[str]
+
+class PredefinedCustomQARequest(BaseModel):
+    QAset:List[Dict]
+    title: str
+    description: str
+    creator: str
+    tags: List[str]
+    

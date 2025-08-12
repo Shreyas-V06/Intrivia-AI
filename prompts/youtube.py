@@ -43,5 +43,6 @@ def get_yt_prompt(transcript:str):
 
     Now perform the task for the following Transcript:
     {transcript}
+
     """
     return prompt

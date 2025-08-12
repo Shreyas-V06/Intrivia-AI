@@ -1,6 +1,6 @@
 from fastapi import  APIRouter
 from youtube.yt_utils import *
-from schemas.interview_qa import *
+from schemas.QAmodel import *
 from datetime import datetime
 from utils import *
 now=datetime.now()

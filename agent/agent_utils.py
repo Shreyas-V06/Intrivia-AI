@@ -1,4 +1,4 @@
-from schemas.interview_qa import QAItem
+from schemas.QAmodel import QAItem
 from typing import List
 #TODO:get question mechanism which gets the question based on interview_id and question_id
 def get_current_question_item(interview_id, question_id):

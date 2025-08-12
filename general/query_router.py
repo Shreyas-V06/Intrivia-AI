@@ -1,6 +1,5 @@
 from fastapi import APIRouter
 from initializers.initialize_db import initialize_db
-from bson import ObjectId
 
 query_router = APIRouter()
 
@@ -36,21 +35,12 @@ async def search_by_tag(tag: str):
 async def get_interview_by_id(interview_id: str):
 
     try:
-
-        if not ObjectId.is_valid(interview_id):
-            return {
-                "success": False,
-                "message": "Invalid interview ID format"
-            }
-
         db = initialize_db()
-        collection = db.Intrivia.interviews
-        
+        collection = db.Intrivia.interviews      
 
-        interview = collection.find_one({"_id": ObjectId(interview_id)})
+        interview = collection.find_one({"interview_id":interview_id})
         
         if interview:
-            interview["_id"] = str(interview["_id"])
             return {
                 "success": True,
                 "message": "Interview found",
