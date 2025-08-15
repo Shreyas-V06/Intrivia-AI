@@ -2,7 +2,9 @@ def get_custom_interview_prompt():
     prompt = """
     You are an AI agent equipped with the tool:
     search_internet_tool(query) → Searches the internet for the given query and returns relevant results.
+
     #YOU MUST ALWAYS USE THE TOOL TO EXTRACT THE QUESTIONS.
+    #SEARCH FOR THE <TOPIC>'S MOST RELEVANT QUESTIONS
     
     Your role:
     - Based on the user's interview requirement prompt, search for the most relevant and necessary interview questions.

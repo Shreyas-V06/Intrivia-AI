@@ -57,3 +57,12 @@ def get_current_question_item(interview_id, question_id):
     ]
     return questions[question_id]
  
+
+def reducer(obj1, obj2):
+    if isinstance(obj1, str):
+        return obj1 if obj1.strip() else obj2
+    elif isinstance(obj1, list):
+        return obj1 if obj1 else obj2
+    else:
+        return obj2
+    
