@@ -1,6 +1,5 @@
 from schemas.SharedState import SharedState
 from schemas.ResponseModel import *
-from langchain_core.messages import AIMessage
 from initializers.initialize_llm import *
 from interviewer.interviewer_utils import get_current_question_item
 from prompts.responder import get_responder_prompt
@@ -10,16 +9,18 @@ from prompts.router import get_router_prompt
 llm=initialize_llm()
 
 def responder(state:SharedState):
-    user_response=state['user_response']
+    user_response=state['messages'][-1].content
     current = get_current_question_item(state['interview_id'],state['question_id'])
     next = get_current_question_item(state['interview_id'],state['question_id']+1)
+    if(next.question=='END OF INTERVIEW' and next.answer=='END OF INTERVIEW'):
+        return state
     prompt=get_responder_prompt(response=user_response,question=current.question,queue=next.question)
     response=llm.invoke(prompt)
     state['messages'].append(response)
     return state
 
 def router(state:SharedState):
-    user_response = state["user_response"]
+    user_response=state['messages'][-1].content
     current = get_current_question_item(state['interview_id'],state['question_id'])
     llm_so=llm.with_structured_output(RouterDecision)
     prompt=get_router_prompt(user_response,current)
@@ -32,7 +33,7 @@ def router(state:SharedState):
     return state
 
 def evaluator(state:SharedState):
-    user_response = state["user_response"]
+    user_response=state['user_response']
     current_question = get_current_question_item(state['interview_id'],state['question_id'])
     llm_so=llm.with_structured_output(Evaluation)
     prompt=get_evaluator_prompt(user_response,current_question.question,current_question.answer)
@@ -40,6 +41,5 @@ def evaluator(state:SharedState):
     return state
 
 def join_node(state:SharedState):
-    #Fan-in node
     return state
 

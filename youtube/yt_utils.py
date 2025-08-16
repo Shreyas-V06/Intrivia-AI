@@ -1,13 +1,12 @@
 from schemas.QAmodel import *
-from initializers.initialize_llm import initialize_llm
-from initializers.initialize_db import initialize_db
+from initializers.initialize_llm import initialize_generator_llm
 from prompts.youtube import get_yt_prompt
 from youtube_transcript_api import YouTubeTranscriptApi
 from pytube import extract
 
 
 def qa_from_yt(transcript:str)->QASet:
-    llm=initialize_llm()
+    llm=initialize_generator_llm()
     prompt=get_yt_prompt(transcript)
     llm_so = llm.with_structured_output(QASet)
     object= llm_so.invoke(prompt)
