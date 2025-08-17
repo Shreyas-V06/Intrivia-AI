@@ -5,8 +5,12 @@ def get_yt_prompt(transcript:str):
     with evaluation scheme pairs.
 
     Instructions:
+    
     #IMPORTANT: Avoid any form of formating through the use of #(hashtags),-(hyphens),*(astricks)
     all the generated content should be in form of words only
+
+    #IMPORTANT: Avoid any questions which asks the candidate to introduce themselves.
+
 
     1. Identify all possible questions — include both:
     Explicitly asked questions in the transcript.
@@ -33,12 +37,7 @@ def get_yt_prompt(transcript:str):
     and modular UI components that improve maintainability and scalability.
     It should mention the Virtual DOM, which optimizes rendering performance by updating only the parts of the UI that change. 
     Knowledge of JSX as a syntax extension that enhances code readability and developer productivity is expected. 
-    The answer should also reference React's large community, extensive ecosystem, and strong support for third-party libraries.
-    Awareness of server-side rendering for SEO benefits, cross-platform capabilities via React Native, and availability of developer tools
-    for debugging and profiling is also appreciated. A complete answer should convey how these features combine to improve development efficiency, 
-    application performance, and long-term maintainability.
-
-
+    
     4. Preserve the logical order of questions as they appear or could appear in the interview.
 
     Now perform the task for the following Transcript:

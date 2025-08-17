@@ -7,7 +7,7 @@ from fastapi import  APIRouter
 
 custom_router=APIRouter()
 
-@custom_router.post('/create/custom')
+@custom_router.post('/create/interview/from-prompt')
 def generate_custom_questions(resource:CustomQARequest):
     """
     Generate interview Q&A set from a custom prompt using LLM.
@@ -29,7 +29,7 @@ def generate_custom_questions(resource:CustomQARequest):
             'date':now.strftime("%Y-%m-%d"),
             'creator':resource.creator,
             'QAset':QAset[0:15],
-            'source':'custom',
+            'source':'prompt',
             'tags':resource.tags
         }
     interview_id=push_interview_details(details)
@@ -40,7 +40,7 @@ def generate_custom_questions(resource:CustomQARequest):
         }
     return status
     
-@custom_router.post('/create/custom/predefined')
+@custom_router.post('/create/interview/from-form')
 def generate_custom_questions(resource:PredefinedCustomQARequest):
     """
     Create interview from predefined Q&A set.

@@ -37,7 +37,7 @@ async def search_by_tag(tag: str):
         db = initialize_db()
         collection = db.Intrivia.interviews
         interviews = list(collection.find(
-        {"tags": tag.lower()},
+        {"tags": tag},
         {"_id": 0}  
          ) 
     )
