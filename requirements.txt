@@ -13,3 +13,4 @@ pymongo
 dotenv
 pytube
 certifi
+PyPDF2

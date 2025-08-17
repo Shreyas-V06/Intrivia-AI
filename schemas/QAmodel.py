@@ -36,9 +36,15 @@ class CustomQARequest(BaseModel):
     tags: List[str]
 
 class PredefinedCustomQARequest(BaseModel):
-    QAset:List[Dict]
+    QAset:List[dict]
     title: str
     description: str
     creator: str
     tags: List[str]
+
+class ResumeQARequest(BaseModel):
+    title: str
+    description: str
+    creator: str
+
     

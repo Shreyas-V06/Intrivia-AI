@@ -7,7 +7,7 @@ now=datetime.now()
 
 yt_router = APIRouter()
 
-@yt_router.post('/create/youtube')
+@yt_router.post('/create/interview/from-youtube')
 async def get_qa_from_yt(resource:YouTubeQARequest):
     try:
         transcript=transcribe_yt_to_str(resource.url)
@@ -19,7 +19,7 @@ async def get_qa_from_yt(resource:YouTubeQARequest):
             'upvotes':0,
             'date':now.strftime("%Y-%m-%d"),
             'creator':resource.creator,
-            'QAset':QAset,
+            'QAset':QAset[0:15],
             'source':'youtube',
             'tags':resource.tags
         }

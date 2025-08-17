@@ -3,7 +3,9 @@ from interviewer.graph_nodes import *
 from schemas.SharedState import SharedState
 from langgraph.graph import StateGraph,START,END
 
+
 memory = MemorySaver()
+
 
 workflow = StateGraph(SharedState)
 workflow.add_node("responder", responder)

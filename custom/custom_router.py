@@ -1,18 +1,26 @@
 from schemas.QAmodel import CustomQARequest,QASet,PredefinedCustomQARequest
 from utils import *
-from initializers.initialize_llm import initialize_llm
+from initializers.initialize_llm import initialize_generator_llm
 from datetime import datetime
 now=datetime.now()
 from fastapi import  APIRouter
 
 custom_router=APIRouter()
 
-@custom_router.post('/create/custom')
+@custom_router.post('/create/interview/from-prompt')
 def generate_custom_questions(resource:CustomQARequest):
-    response=internet_agent(resource.prompt)
-    llm=initialize_llm()
+    """
+    Generate interview Q&A set from a custom prompt using LLM.
+
+    Args:
+        resource (CustomQARequest): Contains prompt, title, description, creator, and tags
+
+    Returns:
+        dict: Status with success flag, message, and created interview ID
+    """
+    llm=initialize_generator_llm()
     llm_so=llm.with_structured_output(QASet)
-    object=llm_so.invoke(response['messages'][-1].content)
+    object=llm_so.invoke(resource.prompt)
     QAset=convert_qalist_to_dict(object)
     details={
             'title':resource.title,
@@ -20,8 +28,8 @@ def generate_custom_questions(resource:CustomQARequest):
             'upvotes':0,
             'date':now.strftime("%Y-%m-%d"),
             'creator':resource.creator,
-            'QAset':QAset,
-            'source':'custom',
+            'QAset':QAset[0:15],
+            'source':'prompt',
             'tags':resource.tags
         }
     interview_id=push_interview_details(details)
@@ -32,8 +40,17 @@ def generate_custom_questions(resource:CustomQARequest):
         }
     return status
     
-@custom_router.post('/create/custom/predefined')
+@custom_router.post('/create/interview/from-form')
 def generate_custom_questions(resource:PredefinedCustomQARequest):
+    """
+    Create interview from predefined Q&A set.
+
+    Args:
+        resource (PredefinedCustomQARequest): Contains QAset, title, description, creator, and tags
+
+    Returns:
+        dict: Status with success flag, message, and created interview ID
+    """
     QAset=resource.QAset
     details={
             'title':resource.title,
@@ -41,7 +58,7 @@ def generate_custom_questions(resource:PredefinedCustomQARequest):
             'upvotes':0,
             'date':now.strftime("%Y-%m-%d"),
             'creator':resource.creator,
-            'QAset':QAset,
+            'QAset':QAset[0:15],
             'source':'custom',
             'tags':resource.tags
         }
